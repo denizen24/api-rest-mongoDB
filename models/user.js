@@ -1,4 +1,10 @@
 const mongoose = require('mongoose');
+const validate = require('mongoose-validator');
+
+const urlValidator = validate({
+  validator: 'matches',
+  arguments: /^[a-zA-Z\-]+$/i,
+});
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -16,6 +22,7 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     required: true,
+    validate: urlValidator,
   },
 });
 

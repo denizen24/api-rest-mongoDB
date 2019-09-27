@@ -1,9 +1,12 @@
 const { Router } = require('express');
 const path = require('path');
 const contents = require('../data/users.json');
+const { createUser } = require('../controllers/users');
 
 const router = Router();
 const errRoute = { message: 'Нет пользователя с таким id' };
+
+router.post('/', createUser);
 
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'data', 'users.json'));
