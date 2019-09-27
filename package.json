@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "editorconfig": "^0.15.3",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.7.1"
   },
   "devDependencies": {
     "eslint": "^6.4.0",
