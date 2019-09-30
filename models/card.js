@@ -1,4 +1,10 @@
 const mongoose = require('mongoose');
+const validate = require('mongoose-validator');
+
+const urlValidator = validate({
+  validator: 'matches',
+  arguments: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/,
+});
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -12,7 +18,17 @@ const cardSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user', default: [] }],
+  link: {
+    type: String,
+    required: true,
+    validate: urlValidator,
+  },
+  likes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    default: [],
+    validate: urlValidator,
+  }],
   createdAt: {
     type: Date,
     default: Date.now,

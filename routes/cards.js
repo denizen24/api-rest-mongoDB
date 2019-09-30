@@ -1,11 +1,22 @@
 const { Router } = require('express');
-const path = require('path');
+const { createCard } = require('../controllers/cards');
+const Card = require('../models/card');
 
 const router = Router();
+const errRoute = { message: 'Нет карточки с таким id' };
 
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'data', 'cards.json'));
+  Card.find({})
+    .then((card) => res.send({ data: card }))
+    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 });
 
+router.delete('/:id', (req, res) => {
+  Card.findByIdAndRemove(req.params.id)
+    .then((card) => res.send({ data: card }))
+    .catch(() => res.status(404).send(errRoute));
+});
+
+router.post('/', createCard);
 
 module.exports = router;

@@ -3,7 +3,7 @@ const validate = require('mongoose-validator');
 
 const urlValidator = validate({
   validator: 'matches',
-  arguments: /^[a-zA-Z\-]+$/i,
+  arguments: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/,
 });
 
 const userSchema = new mongoose.Schema({
