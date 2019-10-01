@@ -21,7 +21,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/', homeRoutes);
-app.use('/users', usersRoutes);
 
 app.use((req, res, next) => {
   req.user = {
@@ -30,6 +29,8 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use('/users', usersRoutes);
 app.use('/cards', cardsRoutes);
 
 app.get('*', (req, res) => {

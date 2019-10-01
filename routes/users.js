@@ -15,8 +15,19 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   User.findById(req.params.id)
-    .then((user) => res.send({ data: user }))
+    .then((user) => {
+      if (user) {
+        res.send({ data: user });
+      }
+      res.status(404).send(errRoute);
+    })
     .catch(() => res.status(404).send(errRoute));
 });
+
+// router.patch('/me', (req, res) => {
+//   User.findByIdAndUpdate(req.params.id)
+//     .then((user) => res.send({ data: user }))
+//     .catch(() => res.status(404).send(errRoute));
+// });
 
 module.exports = router;
