@@ -24,10 +24,16 @@ router.get('/:id', (req, res) => {
     .catch(() => res.status(404).send(errRoute));
 });
 
-// router.patch('/me', (req, res) => {
-//   User.findByIdAndUpdate(req.params.id)
-//     .then((user) => res.send({ data: user }))
-//     .catch(() => res.status(404).send(errRoute));
-// });
+router.patch('/me', (req, res) => {
+  const { name, about } = req.body;
+
+  User.findByIdAndUpdate(req.user._id, { name, about },
+    {
+      new: true,
+      runValidators: true,
+    })
+    .then((user) => res.send({ data: user }))
+    .catch(() => res.status(404).send(errRoute));
+});
 
 module.exports = router;
