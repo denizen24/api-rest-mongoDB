@@ -1,5 +1,8 @@
 const { Router } = require('express');
 const { createUser } = require('../controllers/users');
+const { updateProfile } = require('../controllers/updateProfile');
+const { updateAvatar } = require('../controllers/updateAvatar');
+
 const User = require('../models/user');
 
 const router = Router();
@@ -24,16 +27,8 @@ router.get('/:id', (req, res) => {
     .catch(() => res.status(404).send(errRoute));
 });
 
-router.patch('/me', (req, res) => {
-  const { name, about } = req.body;
+router.patch('/me', updateProfile);
+router.patch('/me/avatar', updateAvatar);
 
-  User.findByIdAndUpdate(req.user._id, { name, about },
-    {
-      new: true,
-      runValidators: true,
-    })
-    .then((user) => res.send({ data: user }))
-    .catch(() => res.status(404).send(errRoute));
-});
 
 module.exports = router;
